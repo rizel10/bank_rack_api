@@ -1,8 +1,8 @@
 class Response
   attr_accessor :status_code, :headers, :body
 
-  def initialize
-    @headers = {}
+  def initialize(hdrs={})
+    @headers = hdrs
   end
 
   def rack_response

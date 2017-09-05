@@ -6,6 +6,8 @@ class Route
     @path            = route_array.first
     @klass_name      = route_array.last[:klass]
     @instance_method = route_array.last[:method]
+
+    print "\n\nRoute Array: #{route_array}\n\n"
     handle_requires
   end
 

@@ -1,17 +1,15 @@
 class Operation < BaseController
 
   def create
-    Response.new.tap do |response|
-      response.body = "Create Operation Withdraw/Deposit"
-      response.status_code = 201
-    end
+    response.body = JSON[{ response: "Create Operation Withdraw/Deposit" }]
+    response.status_code = 201
+    return response
   end
 
   def index
-    Response.new.tap do |response|
-      response.body = "List Operations"
-      response.status_code = 200
-    end
+    response.body = JSON[{ response: "List Operations" }]
+    response.status_code = 200
+    return response
   end
 
 end
