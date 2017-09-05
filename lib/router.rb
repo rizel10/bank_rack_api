@@ -15,6 +15,10 @@ class Router
     @routes[:get] << [path, parse_to(options[:to])]
   end
 
+  def post path, options = {}
+    @routes[:post] << [path, parse_to(options[:to])]
+  end
+
   def route_for env
     path   = env["PATH_INFO"]
     method = env["REQUEST_METHOD"].downcase.to_sym
