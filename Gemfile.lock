@@ -3,6 +3,7 @@ GEM
   specs:
     json (2.0.2)
     rack (2.0.3)
+    sequel (5.0.0)
 
 PLATFORMS
   ruby
@@ -10,6 +11,7 @@ PLATFORMS
 DEPENDENCIES
   json
   rack
+  sequel
 
 RUBY VERSION
    ruby 2.4.1p111
