@@ -9,6 +9,8 @@ GEM
     rack (2.0.3)
     rake (12.0.0)
     sequel (5.0.0)
+    sequel_enum (0.1.1)
+      sequel
 
 PLATFORMS
   ruby
@@ -20,6 +22,7 @@ DEPENDENCIES
   rack
   rake
   sequel
+  sequel_enum
 
 RUBY VERSION
    ruby 2.4.1p111
