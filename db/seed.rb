@@ -6,26 +6,6 @@ require 'faker'
 a = YAML.load_file(File.join(File.dirname(__FILE__), '..', 'config', 'database.yml'))["development"]
 DB = Sequel.connect(a)
 
-DB.create_table :accounts do
-  Integer :account_number, primary_key: true
-  BigDecimal :current_balance, size: [13, 2], null: false, default: 0
-end
-
-DB.create_table :users do
-  primary_key :id
-  foreign_key :account_number, :accounts, type: 'integer', unique: true, null: false
-  String :name, null:false
-  String :cpf, unique: true, null: false
-  String :pin, unique: true, null: false
-end
-
-DB.create_table :operations do
-  primary_key :id
-  foreign_key :user_id, :users
-  Integer :operation_type, null: false
-  BigDecimal :amount, size: [13, 2], null: false
-end
-
 accounts = DB[:accounts]
 users = DB[:users]
 operations = DB[:operations]
