@@ -3,6 +3,7 @@ GEM
   specs:
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    bcrypt (3.1.11)
     faker (1.8.4)
       i18n (~> 0.5)
     i18n (0.8.6)
@@ -21,6 +22,7 @@ PLATFORMS
 
 DEPENDENCIES
   addressable
+  bcrypt
   faker
   json
   logger
