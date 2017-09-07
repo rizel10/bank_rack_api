@@ -1,6 +1,7 @@
 class Operation < Sequel::Model
   # Associations
 	many_to_one :user
+  many_to_one :account
   
   # Enum array
   def self.operation_types
@@ -15,7 +16,8 @@ class Operation < Sequel::Model
   plugin :validation_helpers # Shipped in with Sequel!
   def validate
     super
-    validates_presence :user_id
+    validates_presence :user
+    validates_presence :account
     validates_presence :operation_type
     validates_presence :amount
     validates_presence :created_at

@@ -1,4 +1,7 @@
- require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'response')
+require File.join(File.dirname(__FILE__), '..', '..', 'lib', 'response')
+require File.join(File.dirname(__FILE__), '..', 'models', 'account')
+require File.join(File.dirname(__FILE__), '..', 'models', 'operation')
+require File.join(File.dirname(__FILE__), '..', 'models', 'user')
 
 class BaseController
   attr_reader :env

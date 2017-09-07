@@ -38,7 +38,7 @@ class Router
 
     def parse_to to_string
       klass, method = to_string.split("#")
-      {:klass => klass.capitalize, :method => method}
+      {:klass => klass.capitalize + "Controller", :method => method}
     end
   
 end

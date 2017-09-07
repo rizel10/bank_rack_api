@@ -1,4 +1,4 @@
-class Operation < BaseController
+class OperationController < BaseController
 
   def create
     operation = env["PATH_INFO"].split("/").last
@@ -8,7 +8,8 @@ class Operation < BaseController
   end
 
   def index
-    response.body = JSON[{ response: "List Operations of account #{account_number}" }]
+    set_user
+    response.body = @user.operations.to_json
     response.status_code = 200
     return response
   end
@@ -20,5 +21,12 @@ class Operation < BaseController
       return @account_number = env["PATH_INFO"].match(/\d+/).to_s.to_i # Type converted to integer so method is consistent with it's name.
     end
 
+    def set_account
+      @account = Account.first(account_number: account_number)      
+    end
+
+    def set_user
+      @user = User.first(id: env["PATH_INFO"].match(/\d+/).to_s)      
+    end
 
 end

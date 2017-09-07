@@ -20,6 +20,12 @@ Account.all.each{ |a| User.create(account: a, name: Faker::Name.name, cpf: Rando
 
 User.all.each do |u|
   10.times do 
-    Operation.create({ user: u, operation_type: Operation.operation_types.sample, amount: Random.rand(0.00..100.00) })
+    op_type = Operation.operation_types.sample
+    if op_type == :deposit
+      acc = Account.all.sample
+    elsif op_type == :withdraw
+      acc = u.account
+    end
+    Operation.create({ user: u, account: acc, operation_type: op_type, amount: Random.rand(0.00..100.00) })
   end  
 end

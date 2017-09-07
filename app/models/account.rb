@@ -1,6 +1,7 @@
 class Account < Sequel::Model
   # Associations
 	one_to_one :user
+  one_to_many :operations
 
   # Validations
   plugin :validation_helpers # Shipped in with Sequel!
