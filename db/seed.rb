@@ -1,25 +1,25 @@
-require 'yaml'
-require 'mysql2'
-require 'sequel'
-require 'faker'
+require 'bundler'
+Bundler.require
 
 a = YAML.load_file(File.join(File.dirname(__FILE__), '..', 'config', 'database.yml'))["development"]
-DB = Sequel.connect(a)
+Sequel::Model.db = Sequel.connect(a)
+Sequel::Model.plugin :timestamps, update_on_create: true
 
-accounts = DB[:accounts]
-users = DB[:users]
-operations = DB[:operations]
+# Dir[File.dirname(__FILE__) + '/../app/models/*.rb'].each {|file| require file }
+
+require File.join(File.dirname(__FILE__),'..', 'app', 'models', 'account')
+require File.join(File.dirname(__FILE__),'..', 'app', 'models', 'user')
+require File.join(File.dirname(__FILE__),'..', 'app', 'models', 'operation')
 
 
 30.times do
-  accounts.insert({ account_number: Random.rand(1000..9999), current_balance: Random.rand(0.0..1000.0) })
+  Account.create({ account_number: Random.rand(1000..9999), current_balance: Random.rand(0.0..1000.0) })
 end
 
-accounts.all.each{ |a| users.insert(account_number: a[:account_number], name: Faker::Name.name, cpf: Random.rand(00000000000..99999999999), pin: Random.rand(0000..9999)) }
+Account.all.each{ |a| User.create(account: a, name: Faker::Name.name, cpf: Random.rand(10000000000..99999999999).to_s, pin: Random.rand(1000..9999).to_s) }
 
-users.all.each do |u|
+User.all.each do |u|
   10.times do 
-    operations.insert({ user_id: u[:id], operation_type: Random.rand(0..1), amount: Random.rand(0.00..100.00) })
-  end
-  
+    Operation.create({ user: u, operation_type: Operation.operation_types.sample, amount: Random.rand(0.00..100.00) })
+  end  
 end
