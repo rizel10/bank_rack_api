@@ -1,8 +1,24 @@
 class OperationController < BaseController
 
   def create
-    operation = env["PATH_INFO"].split("/").last
-    response.body = JSON[{ response: "Create #{operation} Operation for Account number: #{account_number} with ammount #{body["ammount"]}" }]
+    set_account
+    operation_type = env["PATH_INFO"].split("/").last
+    
+    @operation = Operation.new
+    params = { operation_type: operation_type, user: User.all.sample, account: @account, amount: body["amount"] }
+
+    begin
+      Account.db.transaction do
+        @account.lock!
+        @operation.update_fields(params, create_params, missing: :raise)
+      end
+    rescue Sequel::ValidationFailed => err
+      response.body = JSON[{ errors: err.to_s, code: 101 }]
+      response.status_code = 422
+      return response
+    end
+
+    response.body = @operation.to_json
     response.status_code = 201
     return response
   end
@@ -16,6 +32,10 @@ class OperationController < BaseController
 
   private
 
+    def create_params
+      [:operation_type, :user, :account, :amount]      
+    end
+
     def account_number
       return @account_number if @account_number
       return @account_number = env["PATH_INFO"].match(/\d+/).to_s.to_i # Type converted to integer so method is consistent with it's name.
@@ -28,6 +48,11 @@ class OperationController < BaseController
       return @filter_params = uri.query_values.delete_if { |key, value| !(["created_after", "created_before"].include? key) }
     end
 
+    # I'm used to Rails ActiveRecord, this is the first time I've used Sequel and
+    # I failed to figure out how should I build a filtering method using Sequel
+    # mostly because a Sequel::Model is a dataset, so I couldn't really add behaviour
+    # to the class nor could I chain where clauses to build a full query (as I normally do on Rails).
+    # I dislike this method below with all my heart, but at least it solves the problem... For now.
     def query_results
       u_id = @user.id
       f_crtd_after = filter_params["created_after"] if filter_params.has_key? "created_after"

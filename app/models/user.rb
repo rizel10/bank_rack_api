@@ -17,4 +17,9 @@ class User < Sequel::Model
     validates_unique :pin
     validates_format /\d{11}/, :cpf, message: 'is a digits only field'
   end
+
+  def account_number
+    account.account_number    
+  end
+  
 end

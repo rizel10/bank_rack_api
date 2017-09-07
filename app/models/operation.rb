@@ -25,22 +25,11 @@ class Operation < Sequel::Model
     validates_includes Operation.operation_types, :operation_type
   end
 
-  # Filtering methods
-  # def self.filtering_chain(filtering_params)
-  #   results = self.all
-  #   filtering_params.each do |key, value|
-  #     association = results.public_send(key, value)
-  #     results = association
-  #   end
-  #   results
-  # end
-
-  # def self.created_after(date)
-  #   self.where{ created_at > date.to_date << 1 }
-  # end
-
-  # def self.created_before(date)
-  #   self.where{ created_at < date.to_date << 1 }
-  # end
+  # Hooks
+  def after_create
+    math_symbols = { deposit: "+", withdraw: "-" }
+    self.account.update(current_balance: self.account.current_balance.send(math_symbols[self.operation_type], self.amount))
+    super
+  end
 
 end
