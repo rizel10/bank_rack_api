@@ -1,8 +1,9 @@
 require 'bundler'
 Bundler.require
 
-a = YAML.load_file(File.join(File.dirname(__FILE__), 'config', 'database.yml'))["development"]
-Sequel::Model.db = Sequel.connect(a)
+db_config = YAML.load_file(File.join(File.dirname(__FILE__), 'config', 'database.yml'))["development"]
+
+Sequel::Model.db = Sequel.connect(db_config.merge(logger: Logger.new("log/db.log")))
 Sequel::Model.plugin :timestamps, update_on_create: true
 Sequel::Model.plugin :json_serializer
 

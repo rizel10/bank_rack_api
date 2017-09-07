@@ -9,7 +9,7 @@ class OperationController < BaseController
 
   def index
     set_user
-    response.body = @user.operations.to_json
+    response.body = Operation.where(user_id: @user.id).filter(filter_params).all.to_json
     response.status_code = 200
     return response
   end
@@ -19,6 +19,12 @@ class OperationController < BaseController
     def account_number
       return @account_number if @account_number
       return @account_number = env["PATH_INFO"].match(/\d+/).to_s.to_i # Type converted to integer so method is consistent with it's name.
+    end
+
+    def filter_params
+      uri = Addressable::URI.new 
+      uri.query = env["QUERY_STRING"]
+      uri.query_values
     end
 
     def set_account
