@@ -25,8 +25,6 @@ class BaseController
         if @current_user.auth_token == env["HTTP_ACCESS_TOKEN"]
           return true
         end
-      else
-        response.error(103, "Unauthorized")
       end
     end
     response.error(103, "Unauthorized")

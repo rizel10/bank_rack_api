@@ -48,7 +48,7 @@ class OperationController < BaseController
     set_user
 
     # authorize request
-    unless OperationPolicy.create?(@current_user, @account, { operation_type: operation_type })
+    unless OperationPolicy.index?(@current_user, @user)
       response.error(104, "Can't list other users operations")
       return response
     end
@@ -95,11 +95,11 @@ class OperationController < BaseController
       f_crtd_after = filter_params["created_after"] if filter_params.has_key? "created_after"
       f_crtd_before = filter_params["created_before"] if filter_params.has_key? "created_before"
       if filter_params.keys.count == 2
-        Operation.where{ (user_id=~ u_id) & (created_at > f_crtd_after) & (created_at < f_crtd_before) }.all
+        Operation.where{ (user_id=~ u_id) & (created_at > f_crtd_after) & (created_at < f_crtd_before) }
       elsif f_crtd_after
-        Operation.where{ (user_id=~ u_id) & (created_at > f_crtd_after) }.all
+        Operation.where{ (user_id=~ u_id) & (created_at > f_crtd_after) }
       elsif f_crtd_before
-        Operation.where{ (user_id=~ u_id) & (created_at < f_crtd_before) }.all
+        Operation.where{ (user_id=~ u_id) & (created_at < f_crtd_before) }
       end
     end
 
