@@ -2,3 +2,4 @@
 .ruby-gemset
 /config/database.yml
 /log/*
+!/log/.keep
