@@ -35,8 +35,8 @@ Here is the published Postman [Documentation](https://documenter.getpostman.com/
 * Properly used HTTP 1.1 verbs and status codes
 ### Cons
 * Controllers are a bit clogged up
-⋅⋅* Responsability of inexistent objects were delegated to the controllers, which is terrible on OO
-⋅⋅* Hard to understand controllers code
+⋅⋅1. Responsability of inexistent objects were delegated to the controllers, which is terrible on OO
+⋅⋅2. Hard to understand controllers code
 * Pretty sure the API is vulnerable to [timing attacks](https://en.wikipedia.org/wiki/Timing_attack) because auth_token is not securely compared
 * Operations list is not paginated and not properly ordered (inverse_of: created_at)
 # Conclusion
