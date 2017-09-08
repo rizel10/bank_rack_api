@@ -9,7 +9,7 @@ gem install bundler
 ```
 Then run `bundle install`
 
-Create a config/database.yml file (there is an example at config folder)
+Create a config/database.yml` file (there is an example at config folder)
 
 Next, run this task to set things up:
 
