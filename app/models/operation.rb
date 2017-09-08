@@ -25,11 +25,19 @@ class Operation < Sequel::Model
     validates_includes Operation.operation_types, :operation_type
   end
 
+  def amount
+    super.to_f
+  end
+
   # Hooks
   def after_create
     math_symbols = { deposit: "+", withdraw: "-" }
     self.account.update(current_balance: self.account.current_balance.send(math_symbols[self.operation_type], self.amount))
     super
+  end
+
+  def serialize
+    self.to_json(except: [:id, :updated_at, :user_id, :account_id])
   end
 
 end

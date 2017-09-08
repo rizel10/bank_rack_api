@@ -13,4 +13,12 @@ class Account < Sequel::Model
     validates_presence :created_at
     validates_presence :updated_at
   end
+
+  def current_balance
+    super.to_f
+  end
+
+  def serialize
+    self.to_json(except: [:id, :created_at, :updated_at])
+  end
 end
