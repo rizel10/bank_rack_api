@@ -26,7 +26,6 @@ I Used Postman (https://www.getpostman.com/) to navigate and perform tests on th
 Here is the published Postman [Documentation](https://documenter.getpostman.com/view/630023/bank-rack/6taZ4tG) and [Collection](https://www.getpostman.com/collections/a50aab55b0d7e4196500)
 
 ## Pros and Cons
------------------
 ### Pros
 * Close to MVC pattern
 * Data integrity ensured using database features and Model Validations
