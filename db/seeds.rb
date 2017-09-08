@@ -34,3 +34,7 @@ user = User.first
 user.pin = "1234"
 user.cpf = "12345678910"
 user.save
+
+account = user.account
+account.account_number = 4955
+account.save
