@@ -19,7 +19,7 @@ Next, run this task to set things up:
 $ rake db:prepare
 ```
 
-This will run all migrations and populate the database with one test user.
+This will run all migrations and populate the database with bunch of data, including one test user.
 
 To start the server run
 
