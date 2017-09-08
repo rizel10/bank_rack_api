@@ -21,6 +21,12 @@ $ rake db:prepare
 
 This will run all migrations and populate the database with one test user.
 
+To start the server run
+
+```console
+$ rackup config.ru
+```
+
 ### Navigating through the api
 
 I Used Postman (https://www.getpostman.com/) to navigate and perform tests on the API.
