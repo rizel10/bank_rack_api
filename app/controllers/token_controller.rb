@@ -1,39 +1,38 @@
 class TokenController < BaseController
 
   def create
-    req_param = []
-    req_param << "cpf" unless body.has_key? "cpf"
-    req_param << "pin" unless body.has_key? "pin"
-
-    if req_param.any?
-      response.body = JSON[{ errors: "Missing parameter: #{req_param.join(", ")}", code: 102 }]
-      response.status_code = 400
+    require_parameters(["cpf", "pin"])
       return response
     end
 
     @user = User.first(cpf: body["cpf"])
     
     unless @user
-      response.body = JSON[{ errors: "invalid pin or cpf", code: 103 }]
-      response.status_code = 422
+      response.error(103, "invalid pin or cpf")
       return response
     end
 
     if @user.pin == body["pin"]
-      token = SecureRandom.urlsafe_base64(nil, false)
-      @user.update(auth_token: token)
-      response.body = @user.to_hash.merge(auth_token: token).to_json
+      token = @user.sign_in
+      response.headers['access-token'] = token
+      response.headers['uid'] = @user.cpf
+      response.body = @user.serialize
       response.status_code = 200
       return response
     else
-      response.body = JSON[{ errors: "invalid pin or cpf", code: 103 }]
-      response.status_code = 422
+      response.error(103, "invalid pin or cpf")
       return response
     end
   end
 
   def destroy
-    
+    if authenticate_user
+      @current_user.sign_out
+      response.headers = {}
+      response.body = JSON[{}]
+      response.status_code = 204
+    end
+    return response
   end
 
 end

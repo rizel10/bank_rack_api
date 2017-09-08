@@ -44,5 +44,18 @@ class User < Sequel::Model
     @auth_token = Password.create(new_auth_token)
     self.encrypted_auth_token = @auth_token
   end
-  
+
+  def sign_in
+    token = SecureRandom.urlsafe_base64(nil, false)
+    self.update(auth_token: token)
+    return token
+  end
+
+  def sign_out
+    self.update(encrypted_auth_token: nil)
+  end
+
+  def serialize
+    self.to_json(except: [:created_at, :updated_at, :account_id, :encrypted_auth_token, :encrypted_pin])
+  end
 end
