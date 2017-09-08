@@ -1,7 +1,7 @@
 class TokenController < BaseController
 
   def create
-    require_parameters(["cpf", "pin"])
+    if require_parameters(["cpf", "pin"])
       return response
     end
 
