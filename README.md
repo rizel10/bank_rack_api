@@ -2,6 +2,8 @@
 
 ## Getting started
 
+Clone project on any folder
+
 This project uses bundler
 
 ```ruby
@@ -40,5 +42,4 @@ Here is the published Postman [Documentation](https://documenter.getpostman.com/
 * Pretty sure the API is vulnerable to [timing attacks](https://en.wikipedia.org/wiki/Timing_attack) because auth_token is not securely compared
 * Operations list is not paginated and not properly ordered (inverse_of: created_at)
 ## Overall
-The API itself is good (disregarding performance, which I know it's not bad), although some part of the code is messy. I decided to use Sequel for the first time as an ORM on this project and it took more time for me to learn everything I needed then I thought, which left me with not enough time to build everything I wanted the way I planned. Or maybe the structure I planned to built my API upon was more complicated than necessary. Either way, I'm satisfied with the result since it contains a good solution to the problem, and it is not that hard to fix the issues it contains.
-
+The API itself is good (disregarding performance, which I know it's not bad), although some part of the code is messy. I decided to use Sequel for the first time as my ORM and it took more time to learn everything I needed then I thought, which left me with not enough time to build everything I wanted the way I planned. Or maybe the structure I planned to built my API upon was more complicated than necessary. Either way, I'm satisfied with the result since it contains a good solution to the problem, and it is not that hard to fix the issues it contains.
